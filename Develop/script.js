@@ -65,7 +65,7 @@ function generatePassword(){
   return password;
 }
 
-//function for debugging
+//function for debugging 
 function logToConsole(item){
   console.log(item);
 }
