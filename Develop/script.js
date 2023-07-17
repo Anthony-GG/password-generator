@@ -30,6 +30,22 @@ function generatePassword(){
     Array("lowercase", lowercaseBool), Array("uppercase", uppercaseBool), Array("numeric", numericBool), Array("special", specialBool)
   ]
 
+  while(true){
+    try {
+      lengthInput = prompt ("How many characters do you want this password to be?\n\nPlease enter a valid number between 8 to 128:");
+      if (lengthInput == null) {
+        var exitText = "PASSWORD GENERATION: CANCELLED"
+        return exitText;
+      } else if (lengthInput < 8 || lengthInput > 128) {
+        throw "Error: Invalid input"
+      } else {
+        break;
+      }
+    } catch {
+        alert("Please enter a valid number.")
+    }
+  }
+
 
   //for each loop prompting user to set each password crteria bool
   for(let i=0; i < criteria.length; i++ ){
@@ -37,8 +53,11 @@ function generatePassword(){
     while(true){
       //try-catch statement used for error handling on input in situations where user enters something other than 'Y' or 'N'
       try{
-        var response = prompt("Do you want this password to have " + criteria[i][0] + " characters? (Answer with Y for yes or N for no)");
-        response = response.toUpperCase();
+        var response = prompt("Do you want this password to have " + criteria[i][0] + " characters?\n\nAnswer with 'Y' for yes or 'N' for no:");
+        //converts response to uppercase (if value is not NULL)
+        if(response != null) {
+          response = response.toUpperCase();
+        }
         switch(response) {
           case 'Y':
             criteria[i][1] = true;
@@ -51,11 +70,11 @@ function generatePassword(){
             var exitText = "PASSWORD GENERATION: CANCELLED"
             return exitText;
           default:
-            throw "Invalid input"
+            throw "Error: Invalid input"
         }
         break;
       } catch{
-        alert("Please enter a valid input.")
+        alert("Please enter a valid input consisting of 'Y' or 'N'.")
       }
   }
     // alert(criteria[i][0])
