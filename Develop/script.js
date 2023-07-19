@@ -158,7 +158,7 @@ function stringGeneration(length, lowercase, uppercase, numeric, special){
     }
     if (special){
       //sets minimum and maximum ascii values for associated category, special has two seperate ranges
-      min = 21;
+      min = 33;
       max = 47;
       minS = 58;
       maxS = 64;
@@ -172,27 +172,34 @@ function stringGeneration(length, lowercase, uppercase, numeric, special){
       }
     }
 
-    //Used for debug purpose to print all random values to the console
-    console.log(asciiValues);
     asciiValues = shuffleArr(asciiValues);
     //Used for debug purpose to print all random values to the console after shuffle
-    console.log(asciiValues);
+    //console.log(asciiValues);
 
-    
+    //creates a new array using the first values in the array up to the given length
+    shuffledAscii = asciiValues.slice(0, length);
+    console.log(shuffledAscii);
+
+    //creates and initilizes password STRING variable and then adds each ASCii values associated character to password
+    var password = "";
+    shuffledAscii.forEach(num => { 
+      password += String.fromCharCode(num);
+    });
+    return password;
 }
 
 //a function that shuffles an array using the Fisher-Yates algorithm as it is less biased than standard Math.random practices according to research
 //PARAMETERS: arr, array
 //RETURNS: arr, shuffled array
-function shuffleArr(array){
+function shuffleArr(arr){
   let oldElement;
-  for (let i = array.length - 1; i > 0; i--) {
+  for (let i = arr.length - 1; i > 0; i--) {
     let rand = Math.floor(Math.random() * (i + 1));
-    oldElement = array[i];
-    array[i] = array[rand];
-    array[rand] = oldElement;
+    oldElement = arr[i];
+    arr[i] = arr[rand];
+    arr[rand] = oldElement;
   }
-  return array;
+  return arr;
 }
 
 // Add event listener to generate button
