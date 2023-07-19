@@ -6,8 +6,14 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
-
+  //Sets password color to red if user cancels out or black if user continues and generates a password
+  if (password == "PASSWORD GENERATION: CANCELLED") {
+    passwordText.style.color='red';
+    passwordText.value = password;
+  } else {
+    passwordText.style.color='black';
+    passwordText.value = password;
+  }
 }
 
 //PURPOSE: Generates password based on criteria to display on the page
@@ -102,11 +108,6 @@ function generatePassword(){
   return password;
 }
 
-//function for debugging 
-function logToConsole(item){
-  console.log(item);
-}
-
 //PURPOSE: generates password based on criteria it is passed 
 //PARAMETERS: LENGTH, num - LOWERCASE, bool - UPPERCASE, bool - NUMERIC, bool - SPECIAL, bool
 //RETURNS: password, STRING based on criteria it is passed
@@ -188,7 +189,7 @@ function stringGeneration(length, lowercase, uppercase, numeric, special){
     return password;
 }
 
-//a function that shuffles an array using the Fisher-Yates algorithm as it is less biased than standard Math.random practices according to research
+//PURPOSE: a function that shuffles an array using the Fisher-Yates algorithm as it is less biased than standard Math.random practices according to research
 //PARAMETERS: arr, array
 //RETURNS: arr, shuffled array
 function shuffleArr(arr){
@@ -201,6 +202,11 @@ function shuffleArr(arr){
   }
   return arr;
 }
+
+// //function for debugging 
+// function logToConsole(item){
+//   console.log(item);
+// }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
