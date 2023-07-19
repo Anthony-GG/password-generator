@@ -10,8 +10,8 @@ function writePassword() {
 
 }
 
-//Generates password based on criteria to display on the page
-//RETURNS: STRING representing a password meeting the requested criteria
+//PURPOSE: Generates password based on criteria to display on the page
+//RETURNS: password, STRING representing a password meeting the requested criteria
 function generatePassword(){
   //This is the password string, currently it has a temporary placeholder.
   var password = "THIS IS A PLACEHOLDER PASSWORD";
@@ -98,8 +98,7 @@ function generatePassword(){
     }
   }
 
-  criteria.forEach(logToConsole);
-  console.log(lengthInput);
+  password = stringGeneration(lengthInput, criteria[0][1], criteria[1][1], criteria[2][1], criteria[3][1]);
   return password;
 }
 
@@ -108,52 +107,92 @@ function logToConsole(item){
   console.log(item);
 }
 
+//PURPOSE: generates password based on criteria it is passed 
+//PARAMETERS: LENGTH, num - LOWERCASE, bool - UPPERCASE, bool - NUMERIC, bool - SPECIAL, bool
+//RETURNS: password, STRING based on criteria it is passed
 function stringGeneration(length, lowercase, uppercase, numeric, special){
 
-    let asciiValues = new Array(length);
+    //Used for debug purposes to determine if password criteria is true or false
+    // console.log("lowercase is " + lowercase);
+    // console.log("uppercase is " + uppercase);
+    // console.log("numeric is " + numeric);
+    // console.log("special is " + special);
+
+    //Declarations and initlization of variables
+    let asciiValues = new Array();
     var min = 0;
     var max= 0;
     var minS = 0;
     var maxS = 0;
 
+    //If statements that activate and push values to the end of the asciiValues array if the password criteria is true
     if (lowercase){
-
+      //sets minimum and maximum ascii values for associated category
       min = 97;
       max = 122;
 
-      for(i=0; i < length; i++) {
-        
+      //picks random values within the given ascii value range
+      for(var i=0; i < length; i++) {
+        asciiValues.push(Math.floor(Math.random() * (max-min) + min));
       }
     }
     if (uppercase){
-      
+      //sets minimum and maximum ascii values for associated category
       min = 65;
       max = 90;
 
-      for(i=0; i < length; i++) {
-        
+      //picks random values within the given ascii value range
+      for(var i=0; i < length; i++) {
+        asciiValues.push(Math.floor(Math.random() * (max-min) + min));
       }
     }
     if (numeric){
-
+      //sets minimum and maximum ascii values for associated category
       min = 48;
       max = 57;
 
-      for(i=0; i < length; i++) {
-        
+      //picks random values within the given ascii value range
+      for(var i=0; i < length; i++) {
+        asciiValues.push(Math.floor(Math.random() * (max-min) + min));
       }
     }
     if (special){
-
+      //sets minimum and maximum ascii values for associated category, special has two seperate ranges
       min = 21;
       max = 47;
       minS = 58;
       maxS = 64;
 
-      for(i=0; i < length; i++) {
-        
+      //picks random values within the given ascii value range, special runs two for loops at half length for its two seperate ranges
+      for(var i=0; i < length / 2; i++) {
+        asciiValues.push(Math.floor(Math.random() * (max-min) + min));
+      }
+      for(var i=0; i < length / 2; i++) {
+        asciiValues.push(Math.floor(Math.random() * (maxS-minS) + minS));
       }
     }
+
+    //Used for debug purpose to print all random values to the console
+    console.log(asciiValues);
+    asciiValues = shuffleArr(asciiValues);
+    //Used for debug purpose to print all random values to the console after shuffle
+    console.log(asciiValues);
+
+    
+}
+
+//a function that shuffles an array using the Fisher-Yates algorithm as it is less biased than standard Math.random practices according to research
+//PARAMETERS: arr, array
+//RETURNS: arr, shuffled array
+function shuffleArr(array){
+  let oldElement;
+  for (let i = array.length - 1; i > 0; i--) {
+    let rand = Math.floor(Math.random() * (i + 1));
+    oldElement = array[i];
+    array[i] = array[rand];
+    array[rand] = oldElement;
+  }
+  return array;
 }
 
 // Add event listener to generate button
